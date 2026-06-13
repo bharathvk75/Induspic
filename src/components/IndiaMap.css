@@ -1,0 +1,159 @@
+/* ==============================================
+   INDIA MAP — Command Center Minimalist Redo
+   ============================================== */
+
+.india-map-master-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.india-map-vector {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible; /* Allows hover 3d extrusions to bleed out if needed */
+}
+
+/* Base Shadow Layer for 2D Map */
+.map-shadow-group {
+  transform: translate(0, 12px);
+}
+.state-base-shadow {
+  fill: #000;
+  opacity: 0.15;
+  filter: blur(8px);
+}
+
+/* State Paths */
+.india-map-state {
+  transform-origin: center center;
+  transform-box: fill-box;
+  transition: filter 0.2s ease, fill 0.2s ease, stroke 0.2s ease;
+}
+
+/* The true 3D hover extrusion (Transform handled by Framer Motion) */
+.india-map-state--hovered {
+  z-index: 10;
+  filter: drop-shadow(1px 1px 0px #063d10)
+          drop-shadow(2px 2px 0px #063d10)
+          drop-shadow(3px 3px 0px #063d10)
+          drop-shadow(4px 4px 0px #063d10)
+          drop-shadow(5px 5px 0px #063d10)
+          drop-shadow(6px 6px 0px #063d10)
+          drop-shadow(12px 16px 20px rgba(0, 0, 0, 0.4));
+}
+
+/* Centroid Ping Rings */
+.ping-ring {
+  animation: radar-ping 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.ping-ring-delayed {
+  animation: radar-ping 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite 0.4s;
+}
+@keyframes radar-ping {
+  0% { r: 4; opacity: 1; }
+  100% { r: 35; opacity: 0; stroke-width: 0; }
+}
+
+/* High-Tech Data Panel */
+.india-map-data-panel {
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  /* Shift it up and right so it doesn't cover the state */
+  transform-origin: bottom left;
+  margin-top: -80px;
+  margin-left: 20px;
+}
+
+.india-map-data-panel__content {
+  background: rgba(18, 20, 29, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  min-width: 180px;
+  position: relative;
+}
+
+/* The pointer line targeting the centroid */
+.india-map-data-panel__pointer {
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg);
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.india-map-data-panel__content h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-row.active-ops {
+  color: #12C83E;
+}
+
+.status-row.coverage {
+  color: var(--text-muted);
+}
+
+.pulse-icon {
+  animation: icon-pulse 2s infinite;
+}
+@keyframes icon-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Loading State */
+.india-map-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1.5rem;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.india-map-loading__spinner {
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--primary-catalyst);
+  border-radius: 50%;
+  animation: map-spin 1s linear infinite;
+}
+
+@keyframes map-spin {
+  to { transform: rotate(360deg); }
+}

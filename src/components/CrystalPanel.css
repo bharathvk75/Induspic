@@ -1,0 +1,80 @@
+.crystal-panel {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  transition: all var(--transition-base);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.crystal-panel--hover:hover {
+  transform: translateY(-4px) translate3d(0, 0, 0);
+  backdrop-filter: blur(32px) saturate(150%);
+  -webkit-backdrop-filter: blur(32px) saturate(150%);
+  border-color: var(--card-border-hover);
+}
+
+.crystal-panel--glow-green {
+  box-shadow:
+    0 4px 24px rgba(var(--primary-catalyst-rgb), 0.12),
+    0 8px 48px rgba(var(--reactive-accent-rgb), 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.crystal-panel--glow-green:hover {
+  box-shadow:
+    0 8px 40px rgba(var(--primary-catalyst-rgb), 0.22),
+    0 16px 64px rgba(var(--reactive-accent-rgb), 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.crystal-panel--glow-amber {
+  box-shadow:
+    0 4px 24px rgba(var(--reactive-accent-rgb), 0.15),
+    0 8px 48px rgba(var(--reactive-accent-rgb), 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.crystal-panel--glow-amber:hover {
+  box-shadow:
+    0 8px 40px rgba(var(--reactive-accent-rgb), 0.25),
+    0 16px 64px rgba(var(--primary-catalyst-rgb), 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.crystal-panel--glow-blue {
+  box-shadow:
+    0 4px 24px rgba(var(--frosted-blue-rgb), 0.2),
+    0 8px 48px rgba(var(--wisteria-blue-rgb), 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.crystal-panel--glow-blue:hover {
+  box-shadow:
+    0 8px 40px rgba(var(--frosted-blue-rgb), 0.3),
+    0 16px 64px rgba(var(--wisteria-blue-rgb), 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.crystal-panel--compact {
+  padding: var(--space-lg);
+}
+
+.crystal-panel--flush {
+  padding: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .crystal-panel {
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+  }
+  .crystal-panel--compact {
+    padding: var(--space-md);
+  }
+}

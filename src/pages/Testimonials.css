@@ -1,0 +1,116 @@
+.testimonials-section {
+  background-color: var(--background);
+  margin: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials-container {
+  z-index: 10;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.testimonials-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 540px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.testimonials-badge {
+  border: 1px solid var(--glass-border);
+  padding: 0.25rem 1rem;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  display: inline-block;
+}
+
+.testimonials-title {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 1.25rem;
+}
+
+.testimonials-subtitle {
+  margin-top: 1.25rem;
+  opacity: 0.75;
+}
+
+.testimonials-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
+  max-height: 740px;
+  overflow: hidden;
+}
+
+.testimonials-col-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.testimonials-card {
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--glass-border-light);
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--glass-shadow);
+  max-width: 320px;
+  width: 100%;
+}
+
+.testimonials-card-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.testimonials-card-img {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonials-card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonials-card-name {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.testimonials-card-role {
+  line-height: 1.25;
+  opacity: 0.7;
+  letter-spacing: -0.02em;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .testimonials-col-hidden-md {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .testimonials-col-hidden-lg {
+    display: none;
+  }
+}

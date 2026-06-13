@@ -1,0 +1,153 @@
+.client-logo-cloud {
+  width: min(920px, 100%);
+  margin: var(--space-2xl) auto 0;
+  opacity: 0;
+  animation: logo-cloud-rise 0.8s ease forwards 0.9s;
+}
+
+.client-logo-cloud__header {
+  text-align: center;
+  display: grid;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.client-logo-cloud__header span {
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  font-weight: 800;
+}
+
+.client-logo-cloud__header strong {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 900;
+}
+
+.client-logo-cloud__divider {
+  height: 1px;
+  width: min(460px, 80%);
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, rgba(var(--primary-catalyst-rgb), 0.28), rgba(var(--reactive-accent-rgb), 0.2), transparent);
+}
+
+.client-logo-cloud__viewport {
+  display: flex;
+  overflow: hidden;
+  padding: var(--space-lg) 0;
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.client-logo-cloud__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-lg);
+  padding-right: var(--space-lg);
+  animation: client-logo-marquee 30s linear infinite;
+}
+
+/* We pause the animation on hover so it doesn't jump */
+.client-logo-cloud__viewport:hover .client-logo-cloud__track {
+  animation-play-state: paused;
+}
+
+.client-logo-cloud__item {
+  width: 190px;
+  min-height: 74px;
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.client-logo-cloud__svg-wrapper {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.client-logo-marquee-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  mix-blend-mode: multiply;
+  background-color: transparent;
+}
+
+html[data-theme='dark'] .client-logo-marquee-img {
+  mix-blend-mode: normal;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 4px;
+}
+
+.client-logo-cloud__fallback {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(var(--primary-catalyst-rgb), 0.22), rgba(var(--frosted-blue-rgb), 0.28));
+  color: var(--primary-catalyst);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 900;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.client-logo-cloud__name {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: left;
+}
+
+@keyframes client-logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes logo-cloud-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .client-logo-cloud {
+    margin-top: var(--space-xl);
+  }
+
+  .client-logo-cloud__header strong {
+    font-size: var(--text-base);
+  }
+
+  .client-logo-cloud__item {
+    width: 164px;
+    min-height: 66px;
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .client-logo-cloud__svg-wrapper,
+  .client-logo-cloud__fallback {
+    width: 40px;
+    height: 40px;
+  }
+}
