@@ -328,7 +328,6 @@ export default function Clients() {
         <section className="clients-insights clients-insights--compact" id="client-intelligence">
           <div className="clients-insights__panel">
             <div className="clients-insights__left">
-              <span className="clients-insights__kicker">Client Intelligence</span>
               <h2>From location data to faster plant support</h2>
               <p>
                 We track plant type, location, equipment context and repeat service

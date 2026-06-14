@@ -39,23 +39,7 @@
   padding: 0 var(--space-xl);
 }
 
-/* Connecting Line */
-.workflow-track__grid::before {
-  content: '';
-  position: absolute;
-  top: 44px;
-  left: calc(12.5% + var(--space-xl));
-  right: calc(12.5% + var(--space-xl));
-  height: 2px;
-  background: linear-gradient(90deg, 
-    var(--primary-catalyst),
-    var(--reactive-accent),
-    var(--frosted-blue),
-    var(--primary-catalyst)
-  );
-  opacity: 0.3;
-  z-index: 0;
-}
+
 
 .workflow-track__card {
   position: relative;

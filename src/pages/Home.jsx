@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger)
 const GALLERY = [
   { src: '/assets/gallery-1.jpg', title: 'On-Site Descaling Operation', desc: 'Precision chemical treatment at sugar factory evaporators' },
   { src: '/assets/gallery-2.jpg', title: 'Chemical Blending Facility', desc: 'State-of-the-art mixing and formulation laboratory' },
-  { src: '/assets/gallery-3.jpg', title: 'Restored Heat Exchangers', desc: 'Post-treatment metallic surfaces with zero erosion' },
+  { src: '/assets/gallery-3.jpg', title: 'Heat Exchangers', desc: 'Post-treatment metallic surfaces with zero erosion' },
   { src: '/assets/gallery-4.jpg', title: 'Specialist Team Deployment', desc: 'Trained maintenance engineers at industrial facility' },
 ]
 
@@ -272,7 +272,6 @@ export default function Home() {
           <span className="home-parallax__rail home-parallax__rail--two" />
         </div>
         <div className="home-parallax__content">
-          <span className="home-parallax__kicker">Scroll Transition</span>
           <h2>From scale deposit to restored industrial flow</h2>
           <p>
             Our chemical treatment teams move from inspection to circulation,

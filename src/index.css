@@ -173,6 +173,7 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   transition: background var(--transition-base), color var(--transition-base);
+  cursor: default;
 }
 
 html[data-theme='dark'] body {
@@ -217,6 +218,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   line-height: 1.15;
   font-weight: 700;
+}
+
+p {
+  text-align: justify;
+  margin-bottom: var(--space-md);
 }
 
 /* --- Crystal-Morphism Surface System --- */

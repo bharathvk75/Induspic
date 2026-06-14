@@ -19,8 +19,11 @@ const CONTACT_INFO = [
   {
     icon: <User className="text-primary-catalyst" size={24} />,
     title: 'Management',
-    lines: ['Mr. Anbu Soman', 'Managing Director'],
-    action: { label: 'View Profile', url: '#profileModal', icon: <IdCard size={16} /> },
+    lines: [
+      { type: 'image', url: '/assets/Profile1.png' },
+      'Mr. Anbu Soman', 
+      'Managing Director'
+    ],
   },
   {
     icon: <Phone className="text-primary-catalyst" size={24} />,
@@ -219,6 +222,13 @@ export default function Contact() {
                     if (typeof line === 'string') {
                       return <p key={j} className="contact-card__text">{line}</p>
                     }
+                    if (line.type === 'image') {
+                      return (
+                        <div key={j} style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+                          <img src={line.url} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-catalyst)' }} />
+                        </div>
+                      )
+                    }
                     return (
                       <div key={j} className="contact-card__row">
                         <span className="contact-card__row-label">{line.label}</span>
@@ -393,31 +403,6 @@ export default function Contact() {
         </div>
       </div>
 
-      {isModalOpen && (
-        <div className="profile-modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="profile-modal crystal-surface" onClick={e => e.stopPropagation()}>
-            <button className="profile-modal-close" onClick={() => setIsModalOpen(false)}>
-              <X size={24} />
-            </button>
-            <div className="profile-modal-content">
-              <div className="profile-modal-avatar">
-                <User size={48} className="text-primary-catalyst" />
-              </div>
-              <h3 className="profile-modal-name">Mr. Anbu Soman</h3>
-              <p className="profile-modal-role text-gradient-green">Managing Director</p>
-              <div className="profile-modal-divider" />
-              <p className="profile-modal-bio">
-                Leading Induspic Engineers with over a decade of expertise in industrial chemical solutions, Mr. Soman has dedicated his career to advancing efficiency and sustainability in sugar mills, distilleries, and power plants across India.
-              </p>
-              <div className="profile-modal-contact">
-                <a href="mailto:induspic@gmail.com" className="profile-modal-link">
-                  <Mail size={16} /> Contact MD
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
