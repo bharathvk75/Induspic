@@ -237,14 +237,11 @@ export default function Contact() {
         <div className="contact-grid">
           <div className="contact-info">
             {CONTACT_INFO.map((info, i) => {
-              const isProfileCard = info.action?.url === '#profileModal'
               return (
                 <article
                   key={i}
-                  className={`contact-card crystal-surface shadow-glow-crystal interactive-tilt-card${isProfileCard ? ' contact-card--clickable' : ''}`}
+                  className="contact-card crystal-surface shadow-glow-crystal interactive-tilt-card"
                   ref={(el) => (cardsRef.current[i] = el)}
-                  onClick={isProfileCard ? () => setIsModalOpen(true) : undefined}
-                  style={isProfileCard ? { cursor: 'pointer' } : undefined}
                 >
                 <div className="contact-card__header">
                   <span className="contact-card__icon">{info.icon}</span>
@@ -454,9 +451,9 @@ export default function Contact() {
       </div>
 
       {isModalOpen && createPortal(
-        <div className="equipment-modal" onClick={() => setIsModalOpen(false)}>
+        <div className="equipment-modal" onClick={(e) => { e.stopPropagation(); setIsModalOpen(false); }}>
           <div className="equipment-modal__content" onClick={e => e.stopPropagation()}>
-            <button className="equipment-modal__close" onClick={() => setIsModalOpen(false)} aria-label="Close modal">
+            <button className="equipment-modal__close" onClick={(e) => { e.stopPropagation(); setIsModalOpen(false); }} aria-label="Close modal">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
             <div className="equipment-modal__visual slideshow-container">
