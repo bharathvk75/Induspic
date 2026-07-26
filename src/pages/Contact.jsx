@@ -53,6 +53,32 @@ export default function Contact() {
   const [characterCount, setCharacterCount] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+  // Lock body scroll while profile modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden'
+      window.__lenis?.stop()
+    } else {
+      document.body.style.overflow = ''
+      window.__lenis?.start()
+    }
+    return () => {
+      document.body.style.overflow = ''
+      window.__lenis?.start()
+    }
+  }, [isModalOpen])
+
+  // Handle Escape key to close profile modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setIsModalOpen(false)
+    }
+    if (isModalOpen) {
+      window.addEventListener('keydown', handleKeyDown)
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isModalOpen])
+
   const pageRef = useRef(null)
   const heroRef = useRef(null)
   const cardsRef = useRef([])
@@ -423,28 +449,33 @@ export default function Contact() {
       </div>
 
       {isModalOpen && createPortal(
-        <div className="equipment-modal" onClick={() => setIsModalOpen(false)}>
-          <div className="equipment-modal__content" onClick={e => e.stopPropagation()} style={{ maxWidth: '560px', gridTemplateColumns: '1fr' }}>
+        <div className="profile-preview-modal" onClick={() => setIsModalOpen(false)}>
+          <div className="profile-preview-modal__content" onClick={e => e.stopPropagation()}>
             <button className="equipment-modal__close" onClick={() => setIsModalOpen(false)} aria-label="Close modal">
               <X size={20} />
             </button>
-            <div style={{ padding: 'var(--space-2xl)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-md)' }}>
+            <div className="profile-preview-modal__visual">
               <img 
                 src={getAssetPath('/assets/Profile1.png')} 
-                alt="Mr. Anbu Soman" 
-                style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--primary-catalyst)', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} 
+                alt="Mr. Anbu Soman - Profile Preview" 
+                className="profile-preview-modal__img"
               />
-              <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 800 }}>Mr. Anbu Soman</h2>
-              <span style={{ color: 'var(--primary-catalyst)', fontWeight: 700, fontSize: 'var(--text-base)' }}>Managing Director — Induspic Engineers</span>
-              <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6, maxWidth: '440px' }}>
+            </div>
+            <div className="profile-preview-modal__info">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-catalyst)', fontWeight: 700, fontSize: 'var(--text-sm)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <User size={18} /> Leadership Profile
+              </div>
+              <h2 style={{ fontSize: 'var(--text-3xl)', fontWeight: 900, color: 'var(--text-primary)', margin: 0 }}>Mr. Anbu Soman</h2>
+              <span style={{ color: 'var(--primary-catalyst)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>Managing Director — Induspic Engineers</span>
+              <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-base)', lineHeight: 1.6, margin: 0 }}>
                 Leading Induspic Engineers' Turnkey Chemical Descaling operations across South India since 2013. Specializing in metallurgy-safe chemical treatments for sugar mills, boilers, evaporators and heavy industrial machinery.
               </p>
-              <div style={{ display: 'flex', gap: 'var(--space-md)', marginTop: 'var(--space-sm)' }}>
-                <a href="tel:+919449983601" className="btn btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: 'var(--text-sm)' }}>
-                  <Phone size={16} /> Call Direct
+              <div style={{ display: 'flex', gap: 'var(--space-md)', marginTop: 'var(--space-md)', flexWrap: 'wrap' }}>
+                <a href="tel:+919449983601" className="btn btn-primary" style={{ padding: '0.75rem 1.4rem', fontSize: 'var(--text-sm)' }}>
+                  <Phone size={16} /> Call Direct (+91 9449983601)
                 </a>
-                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)} style={{ padding: '0.6rem 1.2rem', fontSize: 'var(--text-sm)' }}>
-                  Close
+                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)} style={{ padding: '0.75rem 1.4rem', fontSize: 'var(--text-sm)' }}>
+                  Close Preview
                 </button>
               </div>
             </div>
