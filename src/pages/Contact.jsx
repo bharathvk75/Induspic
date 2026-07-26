@@ -236,12 +236,16 @@ export default function Contact() {
 
         <div className="contact-grid">
           <div className="contact-info">
-            {CONTACT_INFO.map((info, i) => (
-              <article
-                key={i}
-                className="contact-card crystal-surface shadow-glow-crystal interactive-tilt-card"
-                ref={(el) => (cardsRef.current[i] = el)}
-              >
+            {CONTACT_INFO.map((info, i) => {
+              const isProfileCard = info.action?.url === '#profileModal'
+              return (
+                <article
+                  key={i}
+                  className={`contact-card crystal-surface shadow-glow-crystal interactive-tilt-card${isProfileCard ? ' contact-card--clickable' : ''}`}
+                  ref={(el) => (cardsRef.current[i] = el)}
+                  onClick={isProfileCard ? () => setIsModalOpen(true) : undefined}
+                  style={isProfileCard ? { cursor: 'pointer' } : undefined}
+                >
                 <div className="contact-card__header">
                   <span className="contact-card__icon">{info.icon}</span>
                   <h2 className="contact-card__title">{info.title}</h2>
@@ -302,7 +306,8 @@ export default function Contact() {
                   )}
                 </div>
               </article>
-            ))}
+            )
+          })}
           </div>
 
           <div className="contact-form-wrapper" ref={formRef}>
