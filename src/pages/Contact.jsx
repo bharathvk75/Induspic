@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
+import { getAssetPath } from '../utils/assetPath'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MapPin, User, Phone, Map, IdCard, Mail, CheckCircle2, Factory, Copy, Check, X, Send } from 'lucide-react'
@@ -24,6 +26,7 @@ const CONTACT_INFO = [
       'Mr. Anbu Soman', 
       'Managing Director'
     ],
+    action: { label: 'View Profile', url: '#profileModal', icon: <IdCard size={16} /> },
   },
   {
     icon: <Phone className="text-primary-catalyst" size={24} />,
@@ -224,8 +227,8 @@ export default function Contact() {
                     }
                     if (line.type === 'image') {
                       return (
-                        <div key={j} style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-                          <img src={line.url} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-catalyst)' }} />
+                        <div key={j} className="contact-card__profile-img" style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-md)' }}>
+                          <img src={getAssetPath(line.url)} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-catalyst)' }} />
                         </div>
                       )
                     }
@@ -403,6 +406,36 @@ export default function Contact() {
         </div>
       </div>
 
+      {isModalOpen && createPortal(
+        <div className="equipment-modal" onClick={() => setIsModalOpen(false)}>
+          <div className="equipment-modal__content" onClick={e => e.stopPropagation()} style={{ maxWidth: '560px', gridTemplateColumns: '1fr' }}>
+            <button className="equipment-modal__close" onClick={() => setIsModalOpen(false)} aria-label="Close modal">
+              <X size={20} />
+            </button>
+            <div style={{ padding: 'var(--space-2xl)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-md)' }}>
+              <img 
+                src={getAssetPath('/assets/Profile1.png')} 
+                alt="Mr. Anbu Soman" 
+                style={{ width: '130px', height: '130px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--primary-catalyst)', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} 
+              />
+              <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: 800 }}>Mr. Anbu Soman</h2>
+              <span style={{ color: 'var(--primary-catalyst)', fontWeight: 700, fontSize: 'var(--text-base)' }}>Managing Director — Induspic Engineers</span>
+              <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6, maxWidth: '440px' }}>
+                Leading Induspic Engineers' Turnkey Chemical Descaling operations across South India since 2013. Specializing in metallurgy-safe chemical treatments for sugar mills, boilers, evaporators and heavy industrial machinery.
+              </p>
+              <div style={{ display: 'flex', gap: 'var(--space-md)', marginTop: 'var(--space-sm)' }}>
+                <a href="tel:+919449983601" className="btn btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: 'var(--text-sm)' }}>
+                  <Phone size={16} /> Call Direct
+                </a>
+                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)} style={{ padding: '0.6rem 1.2rem', fontSize: 'var(--text-sm)' }}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   )
 }

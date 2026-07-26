@@ -1,5 +1,4 @@
-import './ClientLogoCloud.css'
-
+import { getAssetPath } from '../utils/assetPath'
 import './ClientLogoCloud.css'
 
 const CLIENT_LOGOS = [
@@ -31,7 +30,7 @@ function LogoItem({ logo }) {
     <div className="client-logo-cloud__item" aria-label={logo.name}>
       <div className="client-logo-cloud__svg-wrapper">
         <img 
-          src={logo.img} 
+          src={getAssetPath(logo.img)} 
           alt={`${logo.name} logo`} 
           className="client-logo-marquee-img"
           onError={handleImageError}
@@ -47,9 +46,6 @@ function LogoItem({ logo }) {
 }
 
 export default function ClientLogoCloud() {
-  // Double the logos to ensure smooth infinite scrolling
-  const loop = [...CLIENT_LOGOS, ...CLIENT_LOGOS]
-
   return (
     <section className="client-logo-cloud" aria-label="Trusted client logos">
       <div className="client-logo-cloud__header">

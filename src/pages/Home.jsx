@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getAssetPath } from '../utils/assetPath'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import WorkflowTrack from '../components/WorkflowTrack'
@@ -195,7 +196,7 @@ export default function Home() {
       <div ref={introRef} className="home-intro" aria-hidden="true">
         <img
           ref={logoRef}
-          src="/assets/logo.png"
+          src={getAssetPath('/assets/logo.png')}
           alt="Induspic Engineers Logo"
           className="home-intro__logo"
         />
@@ -205,7 +206,7 @@ export default function Home() {
       <section ref={heroRef} className="home-hero" id="hero">
         <img
           ref={watermarkRef}
-          src="/assets/logo.png"
+          src={getAssetPath('/assets/logo.png')}
           alt=""
           className="home-hero__watermark"
           aria-hidden="true"
@@ -267,7 +268,7 @@ export default function Home() {
 
       <section ref={parallaxRef} className="home-parallax" id="chemical-parallax">
         <div className="home-parallax__stage" aria-hidden="true">
-          <img ref={parallaxLogoRef} src="/assets/logo.png" alt="" className="home-parallax__logo" />
+          <img ref={parallaxLogoRef} src={getAssetPath('/assets/logo.png')} alt="" className="home-parallax__logo" />
           <span className="home-parallax__rail home-parallax__rail--one" />
           <span className="home-parallax__rail home-parallax__rail--two" />
         </div>
@@ -336,7 +337,7 @@ export default function Home() {
               ref={(el) => (galleryRef.current[i] = el)}
             >
               <img
-                src={img.src}
+                src={getAssetPath(img.src)}
                 alt={img.title}
                 className="home-gallery__img"
                 loading={i > 1 ? 'lazy' : 'eager'}

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { getAssetPath } from '../utils/assetPath'
 import gsap from 'gsap'
 import './Navbar.css'
 
@@ -134,7 +135,7 @@ export default function Navbar() {
       >
         <NavLink to="/" className="navbar__logo" aria-label="Induspic Engineers Home" onClick={scrollPageTop}>
           <img
-            src="/assets/logo.png"
+            src={getAssetPath('/assets/logo.png')}
             alt="Induspic Engineers Logo"
             className="navbar__logo-img"
           />

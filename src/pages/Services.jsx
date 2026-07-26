@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
+import { getAssetPath } from '../utils/assetPath'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import InteractiveServiceSelector from '../components/InteractiveServiceSelector'
@@ -100,7 +102,7 @@ function EquipmentCategoryCard({ category, onClick }) {
         <div className={`viewcard-collage ${collageClass}`}>
           {category.images.map((img, i) => (
             <div key={i} className={`collage-img-wrapper item-${i + 1}`}>
-              <img src={img} alt={`${category.title} - ${i + 1}`} loading="lazy" />
+              <img src={getAssetPath(img)} alt={`${category.title} - ${i + 1}`} loading="lazy" />
             </div>
           ))}
         </div>
@@ -124,8 +126,34 @@ function EquipmentGalleryGrid() {
     if (!selectedCategory || selectedCategory.images.length <= 1) return
     const interval = setInterval(() => {
       setCurrentImageIndex(prev => (prev + 1) % selectedCategory.images.length)
-    }, 2500)
+    }, 3500)
     return () => clearInterval(interval)
+  }, [selectedCategory, currentImageIndex])
+
+  // Lock scroll and pause Lenis smooth scroll while modal is open
+  useEffect(() => {
+    if (selectedCategory) {
+      document.body.style.overflow = 'hidden'
+      window.__lenis?.stop()
+    } else {
+      document.body.style.overflow = ''
+      window.__lenis?.start()
+    }
+    return () => {
+      document.body.style.overflow = ''
+      window.__lenis?.start()
+    }
+  }, [selectedCategory])
+
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setSelectedCategory(null)
+    }
+    if (selectedCategory) {
+      window.addEventListener('keydown', handleKeyDown)
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [selectedCategory])
 
   const handleSelect = (cat) => {
@@ -133,37 +161,66 @@ function EquipmentGalleryGrid() {
     setCurrentImageIndex(0)
   }
 
+  const handlePrev = (e) => {
+    e.stopPropagation()
+    if (!selectedCategory) return
+    setCurrentImageIndex(prev => (prev === 0 ? selectedCategory.images.length - 1 : prev - 1))
+  }
+
+  const handleNext = (e) => {
+    e.stopPropagation()
+    if (!selectedCategory) return
+    setCurrentImageIndex(prev => (prev + 1) % selectedCategory.images.length)
+  }
+
   return (
     <>
       <div className="equipment-gallery-grid">
         {EQUIPMENT_CATEGORIES.map((cat, i) => (
-          <EquipmentCategoryCard key={i} category={cat} onClick={(e) => { e.preventDefault(); handleSelect(cat); }} />
+          <EquipmentCategoryCard key={cat.title} category={cat} onClick={(e) => { e.preventDefault(); handleSelect(cat); }} />
         ))}
       </div>
 
-      {selectedCategory && (
+      {selectedCategory && createPortal(
         <div className="equipment-modal" onClick={() => setSelectedCategory(null)}>
           <div className="equipment-modal__content" onClick={e => e.stopPropagation()}>
-            <button className="equipment-modal__close" onClick={() => setSelectedCategory(null)}>
+            <button className="equipment-modal__close" onClick={() => setSelectedCategory(null)} aria-label="Close modal">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
             <div className="equipment-modal__visual slideshow-container">
                 {selectedCategory.images.map((img, i) => (
                     <img 
-                      key={i} 
-                      src={img} 
-                      alt={`${selectedCategory.title} ${i + 1}`} 
+                      key={img} 
+                      src={getAssetPath(img)} 
+                      alt={`${selectedCategory.title} image ${i + 1}`} 
                       className={`slideshow-img ${i === currentImageIndex ? 'active' : ''}`}
                       loading="lazy" 
                     />
                 ))}
+
+                <span className="slideshow-badge">
+                  Image {currentImageIndex + 1} of {selectedCategory.images.length}
+                </span>
+
+                {selectedCategory.images.length > 1 && (
+                  <>
+                    <button className="slideshow-nav slideshow-nav--prev" onClick={handlePrev} aria-label="Previous image">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button className="slideshow-nav slideshow-nav--next" onClick={handleNext} aria-label="Next image">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                  </>
+                )}
                 
                 <div className="slideshow-indicators">
                    {selectedCategory.images.map((_, i) => (
-                      <span 
+                      <button 
+                        type="button"
                         key={i} 
                         className={`slideshow-dot ${i === currentImageIndex ? 'active' : ''}`} 
                         onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(i); }} 
+                        aria-label={`Go to slide ${i + 1}`}
                       />
                    ))}
                 </div>
@@ -171,11 +228,22 @@ function EquipmentGalleryGrid() {
             <div className="equipment-modal__info">
               <div className="equipment-modal__icon">{selectedCategory.icon}</div>
               <h2>{selectedCategory.title}</h2>
-              <p>Descaling and industrial chemical cleaning covered under our turnkey maintenance contract.</p>
-              <button className="btn btn-primary" onClick={() => setSelectedCategory(null)}>Close Viewer</button>
+              <p>
+                Turnkey chemical descaling, scale removal analysis, metallurgy inspection, 
+                and passivation treatment specialized for <strong>{selectedCategory.title}</strong>.
+              </p>
+              <div className="equipment-modal__actions">
+                <Link to="/contact" className="btn btn-primary" onClick={() => setSelectedCategory(null)}>
+                  Request Assessment
+                </Link>
+                <button className="btn btn-secondary" onClick={() => setSelectedCategory(null)}>
+                  Close Viewer
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )

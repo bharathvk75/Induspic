@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { getAssetPath } from '../utils/assetPath'
 import './Footer.css'
 
 export default function Footer() {
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__brand">
           <div className="footer__logo">
-            <img src="/assets/logo.png" alt="Induspic Engineers Logo" />
+            <img src={getAssetPath('/assets/logo.png')} alt="Induspic Engineers Logo" />
             <span className="footer__logo-text">INDUSPIC</span>
           </div>
           <p className="footer__tagline">

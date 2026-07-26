@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useLayoutEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { getAssetPath } from '../utils/assetPath'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Clients.css'
@@ -291,7 +292,7 @@ export default function Clients() {
                       <div className="client-row__main">
                         <div className="client-row__topline">
                           {client.img ? (
-                            <img src={client.img} alt={`${client.name} logo`} className="client-row__logo" loading="lazy" />
+                            <img src={getAssetPath(client.img)} alt={`${client.name} logo`} className="client-row__logo" loading="lazy" />
                           ) : (
                             <span className="client-row__icon" aria-hidden="true">{client.icon}</span>
                           )}

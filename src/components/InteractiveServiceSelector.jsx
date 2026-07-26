@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { getAssetPath } from '../utils/assetPath'
 import './InteractiveServiceSelector.css'
 
 const OPTIONS = [
@@ -56,11 +57,16 @@ export default function InteractiveServiceSelector() {
               type="button"
               key={option.title}
               className={`service-selector__option${active ? ' service-selector__option--active' : ''}`}
-              onClick={() => setActiveIndex(index)}
-              style={{ backgroundImage: `url(${option.image})` }}
+              onClick={(e) => {
+                setActiveIndex(index)
+                e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+              }}
+              style={{ backgroundImage: `url(${getAssetPath(option.image)})` }}
               aria-pressed={active}
+              aria-label={`${option.title}: ${option.description}`}
             >
               <span className="service-selector__shade" />
+              <span className="service-selector__icon">{option.code}</span>
               <span className="service-selector__label">
                 <span className="service-selector__info">
                   <strong>{option.title}</strong>
@@ -74,3 +80,4 @@ export default function InteractiveServiceSelector() {
     </section>
   )
 }
+
