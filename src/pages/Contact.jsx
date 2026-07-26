@@ -227,8 +227,14 @@ export default function Contact() {
                     }
                     if (line.type === 'image') {
                       return (
-                        <div key={j} className="contact-card__profile-img" style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-md)' }}>
-                          <img src={getAssetPath(line.url)} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-catalyst)' }} />
+                        <div 
+                          key={j} 
+                          className="contact-card__profile-img" 
+                          style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-md)', cursor: 'pointer' }}
+                          onClick={() => setIsModalOpen(true)}
+                          title="Click to view profile details"
+                        >
+                          <img src={getAssetPath(line.url)} alt="Mr. Anbu Soman" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-catalyst)' }} />
                         </div>
                       )
                     }
@@ -248,15 +254,25 @@ export default function Contact() {
                     )
                   })}
                   {info.action && (
-                    <a href={info.action.url} className="contact-card__action" target={info.action.url.startsWith('http') ? "_blank" : undefined} rel="noreferrer" onClick={(e) => { 
-                      if (info.action.url === '#profileModal') {
-                        e.preventDefault();
-                        setIsModalOpen(true);
-                      }
-                    }}>
-                      <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{info.action.icon}</span>
-                      {info.action.label}
-                    </a>
+                    info.action.url === '#profileModal' ? (
+                      <button 
+                        type="button" 
+                        className="contact-card__action"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{info.action.icon}</span>
+                        {info.action.label}
+                      </button>
+                    ) : (
+                      <a href={info.action.url} className="contact-card__action" target="_blank" rel="noreferrer">
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{info.action.icon}</span>
+                        {info.action.label}
+                      </a>
+                    )
                   )}
                 </div>
               </article>
