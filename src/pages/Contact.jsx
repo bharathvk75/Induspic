@@ -449,33 +449,37 @@ export default function Contact() {
       </div>
 
       {isModalOpen && createPortal(
-        <div className="profile-preview-modal" onClick={() => setIsModalOpen(false)}>
-          <div className="profile-preview-modal__content" onClick={e => e.stopPropagation()}>
+        <div className="equipment-modal" onClick={() => setIsModalOpen(false)}>
+          <div className="equipment-modal__content" onClick={e => e.stopPropagation()}>
             <button className="equipment-modal__close" onClick={() => setIsModalOpen(false)} aria-label="Close modal">
-              <X size={20} />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
-            <div className="profile-preview-modal__visual">
+            <div className="equipment-modal__visual slideshow-container">
               <img 
                 src={getAssetPath('/assets/Profile1.png')} 
                 alt="Mr. Anbu Soman - Profile Preview" 
-                className="profile-preview-modal__img"
+                className="slideshow-img active" 
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
               />
+              <span className="slideshow-badge">
+                Managing Director Profile
+              </span>
             </div>
-            <div className="profile-preview-modal__info">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-catalyst)', fontWeight: 700, fontSize: 'var(--text-sm)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                <User size={18} /> Leadership Profile
-              </div>
-              <h2 style={{ fontSize: 'var(--text-3xl)', fontWeight: 900, color: 'var(--text-primary)', margin: 0 }}>Mr. Anbu Soman</h2>
-              <span style={{ color: 'var(--primary-catalyst)', fontWeight: 700, fontSize: 'var(--text-lg)' }}>Managing Director — Induspic Engineers</span>
-              <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-base)', lineHeight: 1.6, margin: 0 }}>
-                Leading Induspic Engineers' Turnkey Chemical Descaling operations across South India since 2013. Specializing in metallurgy-safe chemical treatments for sugar mills, boilers, evaporators and heavy industrial machinery.
+            <div className="equipment-modal__info">
+              <div className="equipment-modal__icon"><User size={24} /></div>
+              <h2>Mr. Anbu Soman</h2>
+              <p>
+                Managing Director of <strong>Induspic Engineers</strong> (Chemicals Division). 
+                Leading turnkey chemical descaling operations across South India since 2013 with 
+                controlled chemistry, metallurgy checks, and near 0% parent-metal erosion index for 
+                sugar mills, boilers, evaporators, chillers, and heavy industrial machinery.
               </p>
-              <div style={{ display: 'flex', gap: 'var(--space-md)', marginTop: 'var(--space-md)', flexWrap: 'wrap' }}>
-                <a href="tel:+919449983601" className="btn btn-primary" style={{ padding: '0.75rem 1.4rem', fontSize: 'var(--text-sm)' }}>
+              <div className="equipment-modal__actions">
+                <a href="tel:+919449983601" className="btn btn-primary">
                   <Phone size={16} /> Call Direct (+91 9449983601)
                 </a>
-                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)} style={{ padding: '0.75rem 1.4rem', fontSize: 'var(--text-sm)' }}>
-                  Close Preview
+                <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)}>
+                  Close Viewer
                 </button>
               </div>
             </div>
